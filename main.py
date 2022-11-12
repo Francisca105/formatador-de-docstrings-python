@@ -21,8 +21,14 @@ while Loop:
             Loop = False
         if event.type == pygame.KEYDOWN:
             if event.key == ((pygame.K_LCTRL or pygame.K_RCTRL) and pygame.K_v):
-                pygame.scrap.put(pygame.SCRAP_TEXT, bytes("\n".join(justifica_texto(str(bytes.decode(
-                    pygame.scrap.get(pygame.SCRAP_TEXT))).replace(u'\x00', ''), 79)), 'utf-8'))
+                pygame.scrap.put(pygame.SCRAP_TEXT, 
+                bytes(
+                    "\n".join(
+                        justifica_texto(
+                            str(bytes.decode(pygame.scrap.get(pygame.SCRAP_TEXT), encoding="latin"))
+                            .replace(u'\x00', ''), 79))
+                        , encoding="latin")
+                        )
 
                 text = "O texto formatado foi agora copiado"
                         
@@ -30,34 +36,3 @@ while Loop:
     text_surface = font.render(text, True, [0, 0, 0])
     display.blit(text_surface, [5,5])
     pygame.display.update()
-
-    # pygame.display.flip()
-
-
-# while Loop:
-#     display.fill([240, 240, 234])
-#     pygame.draw.rect(display, [0, 0, 0], input_rect, 2)
-#     pygame.scrap.init()
-#     try:
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 Loop = False
-#             if event.type == pygame.KEYDOWN:
-#                 if event.key == pygame.K_BACKSPACE:
-#                     text = text[:-1]
-#                 elif event.key == ((pygame.K_LCTRL or pygame.K_RCTRL) and pygame.K_v):
-#                     text += bytes.decode(pygame.scrap.get(pygame.SCRAP_TEXT))
-
-#                 elif event.key == pygame.K_DELETE:
-#                     text = ''
-#                 else:
-#                     text += event.unicode
-
-#         text_surface = font.render(text, True, [0, 0, 0])
-#         display.blit(text_surface, (input_rect.x+5, input_rect.y+5))
-
-#         input_rect.w = max(text_surface.get_width() + 10, input_rect.w)
-#         pygame.display.update()
-#     except:
-#         print("404Z")
-#     # pygame.display.flip()
